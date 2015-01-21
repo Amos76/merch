@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+
   def index
   end
 
@@ -8,6 +9,26 @@ class ProductsController < ApplicationController
   def new
   end
 
+  def create
+  end
+
   def edit
   end
+
+  def update
+  end
+
+  def destroy
+  end
+
+  private
+  def product_params
+  	#Whitelisted form data
+  end
+
+  def find_product
+  	#Query to Read a record from the DB.
+  end
+
+
 end
