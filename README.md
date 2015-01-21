@@ -32,3 +32,22 @@
 
 8. Think about other resources (users)
 
+
+----
+
+## Notes
+
+### What is REST (and RESTfulness)?
+
+REST stands fro REpresentational State transfer.
+
+Techno babble speak for HTTP conventions expressed through server side code.
+
+POST requests should CREATE _something_ in a DB
+GET requests should READ _something_ from a DB
+PUT/PATCH request should UPDATE _something_ in a DB
+DELETE request should DESTROY _something_ in a DB
+
+CRUD ought to be RESTful representations of HTTP verbs.
+
+
