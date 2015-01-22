@@ -45,3 +45,12 @@ end
 
 gem 'simple_form'
 
+group :development do 
+		gem 'table_print'
+	end
+
+group :production do
+	# specify gems for Heroku
+end
+
+
