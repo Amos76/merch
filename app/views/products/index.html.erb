@@ -5,11 +5,18 @@
 	<% @products.each do |product|%>
 
 		<div class="product">
-			<%= link_to product_path(product) do %>
-				<h3><%= product.name %></h3>
-			<% end %>
+
+			<div class="image">
+				<%= link_to product_path(product) do %>
+					<%= image_tag product.image.url(:thumb) %>
+					<% end %>
+			</div>
 			
 			<div class="info">
+				<%= link_to product_path(product) do %>
+				<h4><%= product.name %></h4>
+				<% end %>
+
 				<p><%= product.description.truncate(25, separator: /\s/) %></p>
 				<small><%= number_to_currency (product.price_in_pence.to_f/100), unit: "£", precision: 2 %></small>
 			</div>
