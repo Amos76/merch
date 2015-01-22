@@ -5,6 +5,14 @@
 	<h3><%= product.name %></h3>
 	<h4><%= product.description %></h4>
 	<p><%= product.price_in_pence %></p>
-	
+
+	<div class="actions">
+		<!-- If logged in AND user is owner, show these actions -->
+			<%= link_to "Edit", edit_product_path(product) %>
+			<%= link_to "Delete", product_path(product), method: :delete %>
+		<!-- else... -->
+			<%= link_to "Log in", "#" %>
+		<!-- end -->
+	</div>
 <% end %>
 

@@ -8,6 +8,18 @@
 </head>
 <body>
 
+	<header>
+		<nav>
+			<%= link_to "Home", root_path %>
+			<!-- Only show the "add" link to logged in Users -->
+			<!-- If logged in ....  -->
+				<%= link_to "Add a Product", new_product_path %>
+			<!-- else  -->
+				<%= link_to "Log in", "#" %>
+			<!-- end -->
+		</nav>
+	</header>
+
 <%= yield %>
 
 </body>
