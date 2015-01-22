@@ -31,6 +31,16 @@
 ---
 
 8. Think about other resources (users)
+9. Add in paperclip image uploads
+
+---
+
+10. generate user model
+11. run migration
+12. seed users
+13. generate controller
+14. add 'foreign key' to products
+15. setup ASSOCIATIONs
 
 
 ----
