@@ -10,14 +10,21 @@
 	<div class="border"></div>
 
 	<header>
+		<%= link_to root_path do %>
+			<h1>Home</h1>
+		<% end %>
+
 		<nav>
-			<%= link_to "Home", root_path %>
 			<!-- Only show the "add" link to logged in Users -->
-			<!-- If logged in ....  -->
-				<%= link_to "Add a Product", new_product_path %>
-			<!-- else  -->
-				<%= link_to "Log in", "#" %>
-			<!-- end -->
+			<div class="user-actions">
+				<% if current_user? %>
+					<%= link_to current_user.email, user_path(current_user) %>
+					<%= link_to "Add a Product", new_product_path %>
+					<%= link_to "Log Out", session_path, method: :delete %>
+				<% else %>
+					<%= link_to "Log in", new_session_path %>
+				<% end %>
+			</div>
 		</nav>
 	</header>
 

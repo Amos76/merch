@@ -4,18 +4,26 @@ class ProductsController < ApplicationController
 
 
   def index
+  # this is publicly available 
     @products = Product.all
   end
 
   def show
-  
+  # this is publicly available 
   end
 
   def new
-    @product = Product.new
+    # only logged in users
+    if current_user.present?
+      @product = Product.new
+    else
+      redirect_to new_session_path
+      flash[:error] = "You need to be logged in to do that."
+    end
   end
 
   def create
+    # only logged in users
     @product = Product.new(product_params)
     if @product.save
       flash[:success] = "'#{@product.name}' was created in the shop"
@@ -28,9 +36,11 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    # only logged in users and User is product owner
   end
 
   def update
+     # only logged in users and User is product owner
     if @product.update(product_params)
       flash[:success] = "'#{@product.name}' was updated"
       redirect_to product_path(@product)
@@ -42,6 +52,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+     # only logged in users and User is product owner
     @product.destroy
     flash[:success] = "'#{@product.name}' was deleted from the shop"
     @product = nil
