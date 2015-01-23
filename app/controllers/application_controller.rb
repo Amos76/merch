@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :current_user?
+  helper_method :current_user, :current_user?, :user_owns?
 
 	# look for user using session data
 	def current_user
@@ -21,17 +21,13 @@ class ApplicationController < ActionController::Base
 	def require_user
 		unless current_user?
 			flash[:error] = "you must be logged in to do that"
+			reset_session
 			redirect_to new_session_path and return
 		end
 	end
 
-# define an action that check for users
-# and makes sure the user owns something
-
-	def require_owner
-		# check for current_user?
-		# use current_user? to look for belongings
+	def user_owns?(product)
+		product.user == current_user
 	end
-
-
 end
+

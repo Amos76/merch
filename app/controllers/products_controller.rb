@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :require_user, only: [:new, :create]
+  before_action :require_owner, only: [:edit, :update, :destroy]
   before_action :find_product, except: [:index, :new, :create]
 
 
@@ -14,15 +16,15 @@ class ProductsController < ApplicationController
 
   def new
     # only logged in users
-    require_user
-    @product = Product.new
+    # require_user
+    @product = current_user.products.new
     
   end
 
   def create
     # only logged in users
-    require_user
-    @product = Product.new(product_params)
+    # require_user
+    @product = current_user.products.new(product_params)
       if @product.save
         flash[:success] = "'#{@product.name}' was created in the shop"
         redirect_to product_path(@product)
@@ -30,16 +32,16 @@ class ProductsController < ApplicationController
         flash[:error] = "Oops, something went wrong, try again"
         render :new
       end
-    end
-
   end
 
   def edit
     # only logged in users and User is product owner
+    require_owner(@product)
   end
 
   def update
      # only logged in users and User is product owner
+    # require_owner(@product)
     if @product.update(product_params)
       flash[:success] = "'#{@product.name}' was updated"
       redirect_to product_path(@product)
@@ -47,11 +49,11 @@ class ProductsController < ApplicationController
       flash[:error] = "Oops, something went wrong, try again"
       render :edit
     end
-
   end
 
   def destroy
      # only logged in users and User is product owner
+    # require_owner(@product)
     @product.destroy
     flash[:success] = "'#{@product.name}' was deleted from the shop"
     @product = nil
@@ -68,4 +70,24 @@ class ProductsController < ApplicationController
   	#Query to Read a record from the DB.
     @product = Product.find(params["id"])
   end
+
+  # define an action that check for users
+# and makes sure the user owns something
+
+  def require_owner(product)
+    # check for current_user?
+    if current_user?
+    # use current_user? to look for belongings
+    #  compare product parameter with current_user - does user own product
+      unless product.user == current_user
+        flash[:error] = "you can manage products you own"
+        redirect_to root_path and return
+      end
+    else
+      flash[:error] = "you must be logged in to do that"
+      redirect_to new_session_path and return
+    end
+  end
+
+end
 
