@@ -14,18 +14,17 @@
 			<h1>Home</h1>
 		<% end %>
 
-		<nav>
-			<!-- Only show the "add" link to logged in Users -->
-			<div class="user-actions">
-				<% if current_user? %>
-					<%= link_to current_user.email, user_path(current_user) %>
-					<%= link_to "Add a Product", new_product_path %>
-					<%= link_to "Log Out", session_path, method: :delete %>
-				<% else %>
-					<%= link_to "Log in", new_session_path %>
-				<% end %>
-			</div>
-		</nav>
+		<!-- Only show the "add" link to logged in Users -->
+		<div class="user-actions">
+			<% if current_user? %>
+				<%= link_to current_user.email, user_path(current_user) %>
+				<%= link_to "Add a Product", new_product_path %>
+				<%= link_to "Log Out", session_path, method: :delete %>
+			<% else %>
+				<%= link_to "Log in", new_session_path %>
+			<% end %>
+		</div>
+
 	</header>
 
 	<% flash.each do |key, value| %>

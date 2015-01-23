@@ -18,5 +18,20 @@ class ApplicationController < ActionController::Base
 		current_user.present?
 	end
 
+	def require_user
+		unless current_user?
+			flash[:error] = "you must be logged in to do that"
+			redirect_to new_session_path and return
+		end
+	end
+
+# define an action that check for users
+# and makes sure the user owns something
+
+	def require_owner
+		# check for current_user?
+		# use current_user? to look for belongings
+	end
+
 
 end

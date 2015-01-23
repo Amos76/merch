@@ -14,23 +14,22 @@ class ProductsController < ApplicationController
 
   def new
     # only logged in users
-    if current_user.present?
-      @product = Product.new
-    else
-      redirect_to new_session_path
-      flash[:error] = "You need to be logged in to do that."
-    end
+    require_user
+    @product = Product.new
+    
   end
 
   def create
     # only logged in users
+    require_user
     @product = Product.new(product_params)
-    if @product.save
-      flash[:success] = "'#{@product.name}' was created in the shop"
-      redirect_to product_path(@product)
-    else
-      flash[:error] = "Oops, something went wrong, try again"
-      render :new
+      if @product.save
+        flash[:success] = "'#{@product.name}' was created in the shop"
+        redirect_to product_path(@product)
+      else
+        flash[:error] = "Oops, something went wrong, try again"
+        render :new
+      end
     end
 
   end
@@ -70,5 +69,3 @@ class ProductsController < ApplicationController
     @product = Product.find(params["id"])
   end
 
-
-end
