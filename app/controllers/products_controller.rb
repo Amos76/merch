@@ -1,8 +1,7 @@
 class ProductsController < ApplicationController
   before_action :require_user, only: [:new, :create]
-  before_action :require_owner, only: [:edit, :update, :destroy]
   before_action :find_product, except: [:index, :new, :create]
-
+  before_action :require_owner, only: [:edit, :update, :destroy]
 
 
   def index
@@ -36,7 +35,7 @@ class ProductsController < ApplicationController
 
   def edit
     # only logged in users and User is product owner
-    require_owner(@product)
+    # require_owner(@product)
   end
 
   def update
@@ -71,16 +70,16 @@ class ProductsController < ApplicationController
     @product = Product.find(params["id"])
   end
 
-  # define an action that check for users
+# define an action that check for users
 # and makes sure the user owns something
 
-  def require_owner(product)
+  def require_owner
     # check for current_user?
     if current_user?
     # use current_user? to look for belongings
     #  compare product parameter with current_user - does user own product
-      unless product.user == current_user
-        flash[:error] = "you can manage products you own"
+      unless @product.user == current_user
+        flash[:error] = "you can only manage products you own"
         redirect_to root_path and return
       end
     else
